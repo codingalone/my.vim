@@ -1,58 +1,49 @@
-" Note: Skip initialization for vim-tiny or vim-small.
- if 0 | endif
+" OS別のエンコーディング
+if has("win32")
+    set encoding=cp932
+elseif has("win32unix")
+    set encoding=utf-8
+else
+    set encoding=utf-8
+endif
 
- if &compatible
-   set nocompatible               " Be iMproved
- endif
+if &compatible
+  set nocompatible
+endif
+set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
 
- " Required:
- set runtimepath^=~/.vim/bundle/neobundle.vim/
+call dein#begin(expand('~/.vim/dein'))
 
- " Required:
- call neobundle#begin(expand('~/.vim/bundle/'))
+	call dein#add('Shougo/dein.vim')
+	call dein#add('Shougo/vimproc.vim', {'build': 'make'})
+	call dein#add('Shougo/neocomplete.vim')
+	call dein#add('Shougo/unite.vim')
+	call dein#add('Shougo/neomru.vim')
+    call dein#add('Shougo/unite-outline')
+	call dein#add('Shougo/vimfiler.vim')
+	call dein#add('Shougo/neosnippet')
+	call dein#add('Shougo/neosnippet-snippets')
 
-  " Let NeoBundle manage NeoBundle
-  " Required:
-     NeoBundleFetch 'Shougo/neobundle.vim'
+    call dein#add('itchyny/lightline.vim')
+    call dein#add('junegunn/vim-easy-align')
+    call dein#add('terryma/vim-multiple-cursors')
+    call dein#add('cohama/lexima.vim')
+    call dein#add('terryma/vim-expand-region')
+    call dein#add('b4b4r07/vim-shellutils')
+    call dein#add('thinca/vim-fontzoom')
+    call dein#add('thinca/vim-splash')
+    call dein#add('tomasr/molokai')
+    call dein#add('chriskempson/vim-tomorrow-theme')
 
-  " 読み込むプラグインを記載
-  NeoBundle 'Shougo/vimproc.vim', {
-          \ 'build' : {
-          \     'windows' : 'tools\\update-dll-mingw',
-          \     'cygwin' : 'make -f make_cygwin.mak',
-          \     'mac' : 'make -f make_mac.mak',
-          \     'unix' : 'make -f make_unix.mak',
-          \    },
-          \ }
-  NeoBundle 'Shougo/unite.vim'
-  NeoBundle 'itchyny/lightline.vim'
-  NeoBundle 'terryma/vim-multiple-cursors'
-  NeoBundle 'scrooloose/nerdtree'
-  NeoBundle 'cohama/lexima.vim'
-  NeoBundle 'terryma/vim-expand-region'
-  NeoBundle 'b4b4r07/vim-shellutils'
-  NeoBundle 'thinca/vim-fontzoom'
+call dein#end()
 
-"  if has('lua')
-"    NeoBundleLazy 'Shougo/neocomplete.vim', {
-"      \ 'depends' : 'Shougo/vimproc',
-"      \ 'autoload' : { 'insert' : 1,}
-"      \ }
-"  endif
+" 生かしとくといちいちワーニングが出てしまうので、なんとかする。。
+" call dein#install()
 
-  " My Bundles here:
-  " Refer to |:NeoBundle-examples|.
-  " Note: You don't set neobundle setting in .gvimrc!
 
- call neobundle#end()
 
- " Required:
- filetype plugin indent on
-
- " If there are uninstalled bundles found on startup,
- " this will conveniently prompt you to install them.
- NeoBundleCheck
-
+" neocompleteの設定
+" ============================================================
 
 " neocomplete {{{
   let g:neocomplete#enable_at_startup               = 1
@@ -67,33 +58,76 @@
   let g:neocomplete#lock_buffer_name_pattern        = '\*ku\*'
 " }}}
 
+" neocomplete推奨キーマップ
+" タブで選択
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" スペースでポップアップを閉じる
+inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" ============================================================
+
+
+let g:vimfiler_enable_auto_cd = 1
+
+
+" Windown CMD上だと色が足りなくて見た目がおかしくなるので、対策
+" ============================================================
+
+if has("win32") && !has("gui_running")
+    color desert
+else
+    colorscheme tomorrow-night-eighties
+endif
+
+" ============================================================
+
+
+
 
 " その他設定
+" ============================================================
+
 let g:netrw_liststyle=3
 set expandtab
 set tabstop=4
 set shiftwidth=4
-set whichwrap+=<,>,h,l,[,]
 set clipboard=unnamed
+set whichwrap+=<,>,h,l,[,]
 set iminsert=0
+set noswapfile
+set noundofile
+set nobackup
+
+syntax on
+set t_Co=256
 
 
 " キーマッピング
-nnoremap s <Nop>
-nnoremap <C-n>F :MultipleCursorsFind 
-nnoremap <CR> a<CR><ESC>
+" ============================================================
+
 noremap <C-S-Up> ddkkp
 noremap <C-S-Down> ddp
 noremap <S-h> ^
 noremap <S-l> $
+
+nnoremap j gj
+nnoremap k gk
+nnoremap <C-j> <C-e>
+nnoremap <C-k> <C-y>
+nnoremap s <Nop>
+nnoremap <C-n>F :MultipleCursorsFind 
+nnoremap <CR> a<CR><ESC>
+inoremap <C-S-Up> <Esc>ddkkp
+inoremap <C-S-Down> <Esc>ddp
+
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
-
 cnoremap <C-a> <Home>
 cnoremap <C-d> <Delete>
 
+" ThinkPadだといい感じになる
 map <MiddleMouse> <Esc>
 imap <MiddleMouse> <Esc>
 cmap <MiddleMouse> <Esc>
@@ -107,11 +141,9 @@ map <4-MiddleMouse> <Esc>
 imap <4-MiddleMouse> <Esc>
 cmap <4-MiddleMouse> <Esc>
 
-" コマンドのリマップ
-:command! -narg=? -complete=file Tree :NERDTree <args>
-
 
 " ビジュアルモードで、連続して同じレジスタをペーストする
+" ============================================================
 vnoremap <silent> <C-p> "0p<CR>
 
 augroup vimrc-auto-mkdir  " {{{
@@ -125,7 +157,9 @@ augroup vimrc-auto-mkdir  " {{{
   endfunction  " }}}
 augroup END  " }}}
 
-" jqとのIF
+
+" jqの設定
+" ============================================================
 if executable('jq')
     function! s:jq(has_bang, ...) abort range
         execute 'silent' a:firstline ',' a:lastline '!jq' string(a:0 == 0 ? '.' : a:1)
