@@ -25,6 +25,7 @@ call dein#begin(expand('~/.vim/dein'))
 	call dein#add('Shougo/neosnippet-snippets')
 
     call dein#add('itchyny/lightline.vim')
+    call dein#add('Lokaltog/powerline-font')
     call dein#add('junegunn/vim-easy-align')
     call dein#add('terryma/vim-multiple-cursors')
     call dein#add('cohama/lexima.vim')
@@ -40,7 +41,14 @@ call dein#end()
 " 生かしとくといちいちワーニングが出てしまうので、なんとかする。。
 " call dein#install()
 
-
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'component': {
+      \   'readonly': '%{&readonly?"?":""}',
+      \ },
+      \ 'separator': { 'left': "\u2b80", 'right': "\u2b82" },
+      \ 'subseparator': { 'left': "\u2b81", 'right': "\u2b83" }
+      \ }
 
 " neocompleteの設定
 " ============================================================
@@ -87,6 +95,7 @@ endif
 " その他設定
 " ============================================================
 
+set laststatus=2
 let g:netrw_liststyle=3
 set expandtab
 set tabstop=4
