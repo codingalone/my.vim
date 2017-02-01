@@ -14,18 +14,17 @@ set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
 
 call dein#begin(expand('~/.vim/dein'))
 
-	call dein#add('Shougo/dein.vim')
-	call dein#add('Shougo/vimproc.vim', {'build': 'make'})
-	call dein#add('Shougo/neocomplete.vim')
-	call dein#add('Shougo/unite.vim')
-	call dein#add('Shougo/neomru.vim')
+    call dein#add('Shougo/dein.vim')
+    call dein#add('Shougo/vimproc.vim', {'build': 'make'})
+    call dein#add('Shougo/neocomplete.vim')
+    call dein#add('Shougo/unite.vim')
+    call dein#add('Shougo/neomru.vim')
     call dein#add('Shougo/unite-outline')
-	call dein#add('Shougo/vimfiler.vim')
-	call dein#add('Shougo/neosnippet')
-	call dein#add('Shougo/neosnippet-snippets')
+    call dein#add('Shougo/vimfiler.vim')
+    call dein#add('Shougo/neosnippet')
+    call dein#add('Shougo/neosnippet-snippets')
 
-    call dein#add('itchyny/lightline.vim')
-    call dein#add('Lokaltog/powerline-font')
+    call dein#add("itchyny/lightline.vim")
     call dein#add('junegunn/vim-easy-align')
     call dein#add('terryma/vim-multiple-cursors')
     call dein#add('cohama/lexima.vim')
@@ -35,20 +34,14 @@ call dein#begin(expand('~/.vim/dein'))
     call dein#add('thinca/vim-splash')
     call dein#add('tomasr/molokai')
     call dein#add('chriskempson/vim-tomorrow-theme')
+    call dein#add('godlygeek/tabular')
+    call dein#add('plasticboy/vim-markdown')
 
 call dein#end()
 
 " 生かしとくといちいちワーニングが出てしまうので、なんとかする。。
 " call dein#install()
 
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'component': {
-      \   'readonly': '%{&readonly?"?":""}',
-      \ },
-      \ 'separator': { 'left': "\u2b80", 'right': "\u2b82" },
-      \ 'subseparator': { 'left': "\u2b81", 'right': "\u2b83" }
-      \ }
 
 " neocompleteの設定
 " ============================================================
@@ -75,8 +68,14 @@ inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 " ============================================================
 
 
-let g:vimfiler_enable_auto_cd = 1
 
+let g:lightline = {
+      \ 'colorscheme': 'seoul256',
+      \ }
+
+let g:vimfiler_as_default_explorer=1
+let g:vimfiler_enable_auto_cd = 1
+let g:splash#path = "~/.vim/my/splash.txt"
 
 " Windown CMD上だと色が足りなくて見た目がおかしくなるので、対策
 " ============================================================
@@ -100,6 +99,7 @@ let g:netrw_liststyle=3
 set expandtab
 set tabstop=4
 set shiftwidth=4
+inoremap <S-Tab> <C-d>
 set clipboard=unnamed
 set whichwrap+=<,>,h,l,[,]
 set iminsert=0
@@ -119,6 +119,7 @@ noremap <C-S-Down> ddp
 noremap <S-h> ^
 noremap <S-l> $
 
+nnoremap <C-a> gg<S-v><S-g>
 nnoremap j gj
 nnoremap k gk
 nnoremap <C-j> <C-e>
