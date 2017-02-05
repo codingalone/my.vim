@@ -63,8 +63,14 @@ call dein#end()
 " タブで選択
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " スペースでポップアップを閉じる
-inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  "return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
 " ============================================================
 
 
